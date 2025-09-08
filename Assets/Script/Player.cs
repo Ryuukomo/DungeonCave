@@ -9,7 +9,7 @@ public class Player : MonoBehaviour
 
     TextMeshProUGUI texto;
     //TextMeshProUGUI texto2;
-    //Animator anime;
+    Animator anime;
     //Transform ferro;
     Transform player;
     Transform parede;
@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     public bool estaDireita = true;
     Vector3 vect;
     bool chao = true;
+    float movimente;
 
     void Start()
     {
@@ -28,7 +29,8 @@ public class Player : MonoBehaviour
         ////texto2 = GameObject.Find("Vida").transform.GetComponent<TextMeshProUGUI>();
         //ferro = GameObject.Find("Minério de Ferro").transform;
         player = GameObject.Find("Player").transform;
-        //anime = transform.GetComponent<Animator>();
+
+           anime = transform.GetComponent<Animator>();
 
         parede = GameObject.Find("Parede lateral").transform;
         vect = transform.position;
@@ -44,7 +46,8 @@ public class Player : MonoBehaviour
     {
 
 
-        float movimente = Input.GetAxisRaw("Horizontal");
+        movimente = Input.GetAxisRaw("Horizontal");
+
         if (movimente == 1)
         {
             transform.eulerAngles = new Vector2(0, 0);
@@ -57,23 +60,7 @@ public class Player : MonoBehaviour
             transform.eulerAngles = new Vector2(0, 180);
             estaDireita = false;
         }
-        if (Input.GetKeyDown(KeyCode.T) == true)
-        {
-            //Transform Instanciado = Instantiate(projetil);
-            //Instanciado.position = transform.position;
-            //Instanciado.GetComponent<Projetil>().enabled = true;
-
-
-            //if (estaDireita == true)
-            //{
-            //    Instanciado.GetComponent<Projetil>().direcao = new Vector2(1, 0);
-            //}
-
-            //else
-            //{
-            //    Instanciado.GetComponent<Projetil>().direcao = new Vector2(-1, 0);
-            //}
-        }
+   
         movimente = movimente * velocidade;
 
 
@@ -82,21 +69,16 @@ public class Player : MonoBehaviour
 
         transform.position += new Vector3(movimente * Time.deltaTime, pulo * velocidade * Time.deltaTime);
 
-        //if (movimente < 0.1f && movimente > -0.1f)
-        //{
-        //    anime.SetBool("estaAndando", false);
+        if (movimente < 0.1f && movimente > -0.1f)
+        {
+            anime.SetBool("EstaAndando", false);
 
 
-        //}
+        }
+        else {
 
-        //else
-        //{
-
-        //    anime.SetBool("estaAndando", true);
-
-
-        //}
-        //texto2.text = "Vida: <color=green> " + vida + " </color> ";
+            anime.SetBool("EstaAndando", true);
+        }
 
         //if (vida == 1)
         //{
@@ -105,25 +87,27 @@ public class Player : MonoBehaviour
 
 
         //}
-        //if (pulo > 0.1f)
-        //{
 
-        //    anime.SetBool("estaPulando", true);
 
-        //}
+        if (Input.GetKey(KeyCode.T) == true)
+        {
 
-        //else
-        //{
-        //    anime.SetBool("estaPulando", false);
+            anime.SetBool("EstaAtacando", true);
 
-        //} 
+        }
+
+        else
+        {
+            anime.SetBool("EstaAtacando", false);
+
+        }
 
 
 
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision )
     {
 
         //
@@ -169,51 +153,67 @@ public class Player : MonoBehaviour
         if(collision.gameObject.name.Contains("Costela") == true)
         {
             Destroy(collision.gameObject);
-            texto.text = "Minério de ferro:" + (2 - minerio--);
+            minerio--;
+            minerio--;
+            texto.text = "Minério de ferro:" + minerio;
         }
 
 
         if (collision.gameObject.name.Contains("Cranio1") == true)
         {
             Destroy(collision.gameObject);
-            texto.text = "Minério de ferro:" + (2 - minerio--);
+            minerio--;
+            minerio--;
+            texto.text = "Minério de ferro:" + minerio;
         }
 
 
         if (collision.gameObject.name.Contains("OssoAleatório1") == true)
         {
             Destroy(collision.gameObject);
-            texto.text = "Minério de ferro:" + (2 - minerio--);
+            minerio--;
+            minerio--;
+            texto.text = "Minério de ferro:" + minerio;
         }
 
         if (collision.gameObject.name.Contains("OssoAleatório2") == true)
         {
             Destroy(collision.gameObject);
-            texto.text = "Minério de ferro:" + (2 - minerio--);
+            minerio--;
+            minerio--;
+            texto.text = "Minério de ferro:" + minerio;
         }
 
         if (collision.gameObject.name.Contains("Mandibula") == true)
         {
             Destroy(collision.gameObject);
-            texto.text = "Minério de ferro:" + (2 - minerio--);
+            minerio--;
+            minerio--;
+            texto.text = "Minério de ferro:" + minerio;
         }
 
         if (collision.gameObject.name.Contains("Mao") == true)
         {
             Destroy(collision.gameObject);
-            texto.text = "Minério de ferro:" + (2 - minerio--);
+            minerio--;
+            minerio--;
+            texto.text = "Minério de ferro:" + minerio;
         }
 
         if (collision.gameObject.name.Contains("OssoQuebrado") == true)
         {
             Destroy(collision.gameObject);
-            texto.text = "Minério de ferro:" + (2 - minerio--);
+            minerio--;
+            minerio--;
+            texto.text = "Minério de ferro:" + minerio;
         }
 
         if (collision.gameObject.name.Contains("CranioQuebrado") == true)
         {
             Destroy(collision.gameObject);
-            texto.text = "Minério de ferro:" + (2 - minerio--);
+            minerio--;
+            minerio--;
+            texto.text = "Minério de ferro:" + minerio;
         }
 
     }
