@@ -157,13 +157,63 @@ public class Player : MonoBehaviour
             texto.text = "Minério de ferro:" + minerio;
         }
 
-        if (minerio >= 2)
+        if (minerio >= 5)
         {
             if (collision.gameObject.name.Contains("Rara") == true)
             {
                 Destroy(collision.gameObject);
             }
 
+        }
+
+        if(collision.gameObject.name.Contains("Costela") == true)
+        {
+            Destroy(collision.gameObject);
+            texto.text = "Minério de ferro:" + (2 - minerio--);
+        }
+
+
+        if (collision.gameObject.name.Contains("Cranio1") == true)
+        {
+            Destroy(collision.gameObject);
+            texto.text = "Minério de ferro:" + (2 - minerio--);
+        }
+
+
+        if (collision.gameObject.name.Contains("OssoAleatório1") == true)
+        {
+            Destroy(collision.gameObject);
+            texto.text = "Minério de ferro:" + (2 - minerio--);
+        }
+
+        if (collision.gameObject.name.Contains("OssoAleatório2") == true)
+        {
+            Destroy(collision.gameObject);
+            texto.text = "Minério de ferro:" + (2 - minerio--);
+        }
+
+        if (collision.gameObject.name.Contains("Mandibula") == true)
+        {
+            Destroy(collision.gameObject);
+            texto.text = "Minério de ferro:" + (2 - minerio--);
+        }
+
+        if (collision.gameObject.name.Contains("Mao") == true)
+        {
+            Destroy(collision.gameObject);
+            texto.text = "Minério de ferro:" + (2 - minerio--);
+        }
+
+        if (collision.gameObject.name.Contains("OssoQuebrado") == true)
+        {
+            Destroy(collision.gameObject);
+            texto.text = "Minério de ferro:" + (2 - minerio--);
+        }
+
+        if (collision.gameObject.name.Contains("CranioQuebrado") == true)
+        {
+            Destroy(collision.gameObject);
+            texto.text = "Minério de ferro:" + (2 - minerio--);
         }
 
     }
