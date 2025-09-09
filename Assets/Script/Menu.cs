@@ -12,6 +12,26 @@ public class Menu : MonoBehaviour
 
   
     // Update is called once per frame
+
+    public void Comandos()
+    {
+        SceneManager.LoadScene("Comandos");
+    }
+    public void Voltar()
+    {
+        SceneManager.LoadScene("JogoCave");
+    }
+
+    public void Voltar2()
+    {
+        SceneManager.LoadScene("Pause");
+    }
+
+    public void Voltar3()
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
     public void Sair()
     {
         Application.Quit();

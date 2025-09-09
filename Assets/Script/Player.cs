@@ -7,6 +7,11 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private Player(){}  // Construtor privado para implementar o padrão Singleton
+
+    private static Player instancia;  // Instância única da classe
+
+    public static Player Instancia => instancia ??= new Player();  // Getter da instância (Singleton)
 
     TextMeshProUGUI texto;
     TextMeshProUGUI texto2;
@@ -30,17 +35,19 @@ public class Player : MonoBehaviour
     void Start()
     {
         texto = GameObject.Find("Mineriodeferro").transform.GetComponent<TextMeshProUGUI>();
-       texto2 = GameObject.Find("ReduzSkill").transform.GetComponent<TextMeshProUGUI>();
+        texto2 = GameObject.Find("ReduzSkill").transform.GetComponent<TextMeshProUGUI>();
         //ferro = GameObject.Find("Minério de Ferro").transform;
         player = GameObject.Find("Player").transform;
 
-           anime = transform.GetComponent<Animator>();
+        anime = transform.GetComponent<Animator>();
 
         parede = GameObject.Find("Parede lateral").transform;
         vect = transform.position;
 
 
         vect = transform.position;
+        
+        Debug.Log("Aperte P para pausar e ver as instruções");
         //vida = 4;
         //texto2.text = "Vida: <color=green> " + vida + " </color> ";
     }
@@ -49,6 +56,7 @@ public class Player : MonoBehaviour
     void Update()
     {
 
+    
 
         movimente = Input.GetAxisRaw("Horizontal");
 
@@ -64,7 +72,7 @@ public class Player : MonoBehaviour
             transform.eulerAngles = new Vector2(0, 180);
             estaDireita = false;
         }
-   
+
         movimente = movimente * velocidade;
 
 
@@ -79,7 +87,8 @@ public class Player : MonoBehaviour
 
 
         }
-        else {
+        else
+        {
 
             anime.SetBool("EstaAndando", true);
         }
@@ -91,26 +100,18 @@ public class Player : MonoBehaviour
 
 
         //}
-
-
-        if (Input.GetKey(KeyCode.T) == true)
+        if (Input.GetKey(KeyCode.P) == true)
         {
-
-            anime.SetBool("EstaAtacando", true);
+            SceneManager.LoadScene("Pause");
 
         }
 
-        else
-        {
-            anime.SetBool("EstaAtacando", false);
-
-        }
 
 
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision )
+    private void OnCollisionEnter2D(Collision2D collision)
     {
 
         //
@@ -126,11 +127,17 @@ public class Player : MonoBehaviour
 
 
         //}
+
+        if (collision.gameObject.name.Contains("Comum") == false)
+        {
+            anime.SetBool("EstaAtacando", false);
+        }
         if (collision.gameObject.name.Contains("Comum") == true)
         {
+            anime.SetBool("EstaAtacando", true);
             pedra++;
             Destroy(collision.gameObject);
-            Debug.Log(pedra);
+
 
             //Debug.Log("Parabéns !! Você pegou:" + n++);
 
@@ -139,24 +146,26 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.name.Contains("Minério de Ferro") == true)
         {
+            anime.SetBool("EstaAtacando", true);
 
-            Debug.Log(pedra);
             Destroy(collision.gameObject);
             minerio++;
+            anime.SetBool("EstaAtacando", false);
             pedra++;
-          
+
 
             texto.text = "Minério de ferro:" + minerio;
-            
+
         }
 
         if (minerio >= 5)
         {
             if (collision.gameObject.name.Contains("Rara") == true)
             {
+                anime.SetBool("EstaAtacando", true);
                 Destroy(collision.gameObject);
                 pedra++;
-                Debug.Log(pedra);
+                anime.SetBool("EstaAtacando", false);
 
 
             }
@@ -165,9 +174,10 @@ public class Player : MonoBehaviour
 
         if (pedra == 2194)
         {
-            SceneManager.LoadScene("Menu");
+            SceneManager.LoadScene("fim");
 
         }
+
 
         if (collision.gameObject.name.Contains("Costela") == true)
         {
@@ -187,6 +197,7 @@ public class Player : MonoBehaviour
             minerio--;
             minerio--;
             minerio--;
+            minerio--;
             ossos++;
             texto2.text = "Caveira:" + ossos;
             texto.text = "Minério de ferro:" + minerio;
@@ -196,7 +207,6 @@ public class Player : MonoBehaviour
         if (collision.gameObject.name.Contains("OssoAleatório1") == true)
         {
             Destroy(collision.gameObject);
-            minerio--;
             minerio--;
             ossos++;
             texto2.text = "Caveira:" + ossos;
@@ -230,6 +240,7 @@ public class Player : MonoBehaviour
             minerio--;
             minerio--;
             minerio--;
+            minerio--;
             ossos++;
             texto2.text = "Caveira:" + ossos;
             texto.text = "Minério de ferro:" + minerio;
@@ -238,8 +249,7 @@ public class Player : MonoBehaviour
         if (collision.gameObject.name.Contains("OssoQuebrado") == true)
         {
             Destroy(collision.gameObject);
-            minerio--;
-            minerio--;
+            minerio = minerio / 2;
             ossos++;
             texto2.text = "Caveira:" + ossos;
             texto.text = "Minério de ferro:" + minerio;
@@ -248,14 +258,17 @@ public class Player : MonoBehaviour
         if (collision.gameObject.name.Contains("CranioQuebrado") == true)
         {
             Destroy(collision.gameObject);
-            minerio = 0;
+            minerio = minerio / 2;
             ossos++;
             texto2.text = "Caveira:" + ossos;
             texto.text = "Minério de ferro:" + minerio;
-            
-            SceneManager.LoadScene("Fim2");
+
         }
 
+        if (ossos == 8)
+        {
+            SceneManager.LoadScene("Fim2");
+        }
 
     }
 }
