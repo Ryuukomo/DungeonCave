@@ -2,13 +2,14 @@ using System.Drawing;
 using TMPro;
 using Unity.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     TextMeshProUGUI texto;
-    //TextMeshProUGUI texto2;
+    TextMeshProUGUI texto2;
     Animator anime;
     //Transform ferro;
     Transform player;
@@ -17,8 +18,11 @@ public class Player : MonoBehaviour
     public float y;
     public float x;
     public int minerio = 0;
+    public int ossos = 0;
     int vida;
     public bool estaDireita = true;
+    bool masmorra = true;
+    public int pedra = 0;
     Vector3 vect;
     bool chao = true;
     float movimente;
@@ -26,7 +30,7 @@ public class Player : MonoBehaviour
     void Start()
     {
         texto = GameObject.Find("Mineriodeferro").transform.GetComponent<TextMeshProUGUI>();
-        ////texto2 = GameObject.Find("Vida").transform.GetComponent<TextMeshProUGUI>();
+       texto2 = GameObject.Find("ReduzSkill").transform.GetComponent<TextMeshProUGUI>();
         //ferro = GameObject.Find("Minério de Ferro").transform;
         player = GameObject.Find("Player").transform;
 
@@ -104,7 +108,6 @@ public class Player : MonoBehaviour
 
 
 
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision )
@@ -125,8 +128,9 @@ public class Player : MonoBehaviour
         //}
         if (collision.gameObject.name.Contains("Comum") == true)
         {
-
+            pedra++;
             Destroy(collision.gameObject);
+            Debug.Log(pedra);
 
             //Debug.Log("Parabéns !! Você pegou:" + n++);
 
@@ -136,9 +140,14 @@ public class Player : MonoBehaviour
         if (collision.gameObject.name.Contains("Minério de Ferro") == true)
         {
 
+            Debug.Log(pedra);
             Destroy(collision.gameObject);
             minerio++;
+            pedra++;
+          
+
             texto.text = "Minério de ferro:" + minerio;
+            
         }
 
         if (minerio >= 5)
@@ -146,15 +155,27 @@ public class Player : MonoBehaviour
             if (collision.gameObject.name.Contains("Rara") == true)
             {
                 Destroy(collision.gameObject);
+                pedra++;
+                Debug.Log(pedra);
+
+
             }
 
         }
 
-        if(collision.gameObject.name.Contains("Costela") == true)
+        if (pedra == 2194)
+        {
+            SceneManager.LoadScene("Menu");
+
+        }
+
+        if (collision.gameObject.name.Contains("Costela") == true)
         {
             Destroy(collision.gameObject);
             minerio--;
             minerio--;
+            ossos++;
+            texto2.text = "Caveira:" + ossos;
             texto.text = "Minério de ferro:" + minerio;
         }
 
@@ -164,6 +185,10 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
             minerio--;
             minerio--;
+            minerio--;
+            minerio--;
+            ossos++;
+            texto2.text = "Caveira:" + ossos;
             texto.text = "Minério de ferro:" + minerio;
         }
 
@@ -173,6 +198,8 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
             minerio--;
             minerio--;
+            ossos++;
+            texto2.text = "Caveira:" + ossos;
             texto.text = "Minério de ferro:" + minerio;
         }
 
@@ -181,6 +208,8 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
             minerio--;
             minerio--;
+            ossos++;
+            texto2.text = "Caveira:" + ossos;
             texto.text = "Minério de ferro:" + minerio;
         }
 
@@ -189,6 +218,8 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
             minerio--;
             minerio--;
+            ossos++;
+            texto2.text = "Caveira:" + ossos;
             texto.text = "Minério de ferro:" + minerio;
         }
 
@@ -197,6 +228,10 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
             minerio--;
             minerio--;
+            minerio--;
+            minerio--;
+            ossos++;
+            texto2.text = "Caveira:" + ossos;
             texto.text = "Minério de ferro:" + minerio;
         }
 
@@ -205,16 +240,22 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
             minerio--;
             minerio--;
+            ossos++;
+            texto2.text = "Caveira:" + ossos;
             texto.text = "Minério de ferro:" + minerio;
         }
 
         if (collision.gameObject.name.Contains("CranioQuebrado") == true)
         {
             Destroy(collision.gameObject);
-            minerio--;
-            minerio--;
+            minerio = 0;
+            ossos++;
+            texto2.text = "Caveira:" + ossos;
             texto.text = "Minério de ferro:" + minerio;
+            
+            SceneManager.LoadScene("Fim2");
         }
+
 
     }
 }
